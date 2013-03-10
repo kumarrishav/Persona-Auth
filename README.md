@@ -2,19 +2,9 @@
 
 Persona Auth is a Simple Authentication system in PHP with [Mozilla Persona](http://www.mozilla.org/en-US/persona/).
 
-Since Persona Only handles the Login Portion, I was tasked with Creating a Session Type handling system in PHP, to handle my users being logged in, So Challenge Accepted!
-
-This is not a library, it's a simple solution. You can easily port or integrate this into your own website if you want and did not know how it was done.
-
-This script is powered by the [PHP BrowserID Class](http://tools.atto.be/browserid/) by *Guillaume*.
-
-Big props to him, it helped me achieve this a lot easier.
-
-Feel Free to send feedback, suggestions and even contribute if you want.
-If you do want to make something bigger or even add OpenId, Facebook or some alternative solutions like that, then Feel free to Fork.
+Since Persona Only handles the Login Portion, I was tasked with Creating a Session Type handling system in PHP, to keeping my users logged in. Challenge Accepted!
 
 I operate all things on Github using [UNLICENSE](http://unlicense.org/) (the /care license)
-
 
 ## Usage
 
@@ -33,3 +23,15 @@ CREATE TABLE IF NOT EXISTS persona_users (
 ```
 
 After that you should be ready to roll. Assuming that the files have been uploaded to your server of course.
+
+### Feedback
+
+This is not a library, it's a simple solution. You can easily port or integrate this into your own website if you want, since I have yet to see any Non-Wordpress Supported website with Persona.
+
+Feel Free to send feedback, suggestions and even contribute if you want.
+If you do want to make something bigger or even add OpenId, Facebook or some alternative solutions like that, then Feel free to Fork.
+
+### Credits
+
+- Big props to *Guillaume* for his [PHP BrowserID Class](http://tools.atto.be/browserid/), it helped me handle the Persona code a lot easier.
+- Mozilla for the Persona Project. So many people worked on this together! All of them, big thanks!
