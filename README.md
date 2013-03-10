@@ -1,14 +1,14 @@
 # Persona Auth
 
-Persona Auth is a Simple Authentication system in PHP with [Mozilla Persona](http://www.mozilla.org/en-US/persona/).
+Persona Auth is a Simple Implementation in PHP for keeping track who is logged in using [Mozilla Persona](http://www.mozilla.org/en-US/persona/).
 
-Since Persona Only handles the Login Portion, I was tasked with Creating a Session Type handling system in PHP, to keeping my users logged in. Challenge Accepted!
-
-I operate all things on Github using [UNLICENSE](http://unlicense.org/) (the /care license)
+Persona Only handles the Login Portion, Thus I was tasked with Creating a Session Type handling system in PHP, to keeping my users logged in. Challenge Accepted!
 
 ## Usage
 
-1. Rename ´settings.sample.php´ to ´settings.php´
+This is more of a Implementation rather then a Library.
+
+1. Rename `settings.sample.php` to `settings.php`
 2. Change database Details
 3. Dump the follwing SQL in your database
 
@@ -19,19 +19,19 @@ CREATE TABLE IF NOT EXISTS persona_users (
   username varchar(255) NOT NULL,
   session text NOT NULL,
   PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=2;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 ```
 
 After that you should be ready to roll. Assuming that the files have been uploaded to your server of course.
 
 ### Feedback
 
-This is not a library, it's a simple solution. You can easily port or integrate this into your own website if you want, since I have yet to see any Non-Wordpress Supported website with Persona.
+I operate all things on Github using [UNLICENSE](http://unlicense.org/) (the /care license)
+Feel Free to provide feedback, Suggestions, Contribute, etc.
 
-Feel Free to send feedback, suggestions and even contribute if you want.
-If you do want to make something bigger or even add OpenId, Facebook or some alternative solutions like that, then Feel free to Fork.
+Anyone is free to copy, modify, publish, use, compile, sell, or distribute this software, either in source code form or as a compiled binary, for any purpose, commercial or non-commercial, and by any means.
 
 ### Credits
 
-- Big props to *Guillaume* for his [PHP BrowserID Class](http://tools.atto.be/browserid/), it helped me handle the Persona code a lot easier.
+- Big props to **Guillaume** for his [PHP BrowserID Class](http://tools.atto.be/browserid/).
 - Mozilla for the Persona Project. So many people worked on this together! All of them, big thanks!
