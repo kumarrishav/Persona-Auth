@@ -4,9 +4,7 @@ include 'config.php';
 if($login)
 {
     # Update Session
-    $query = bindParams("UPDATE persona_users SET session = ? WHERE email = ?", array('nihil',$email));
-    mysql_query($query)or die($statement.' | '.mysql_error());
-    
+    $pdo->query("UPDATE persona_users SET session = ? WHERE email = ?", array('nihil',$email));
     setcookie('session', '', time());
     
     echo 'Successfully Logged Out.';

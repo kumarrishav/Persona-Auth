@@ -1,76 +1,47 @@
 <?php
-/**
- * @author Aaron D. Campbell
- * @link http://bluedogwebservices.com/replace-every-other-occurrence-with-str_replace/
- * 
- * Replaces every other occurrence of search in haystack with replace
- * 
- * @param $needle mixed
- * @param $replace mixed
- * @param $haystack mixed
- * @param $count int[optional]
- * @param $replace_first bool[optional] - Default true
- * @return mixed
- */
-function str_replace_every_other($needle, $replace, $haystack, &$count=null, $replace_first=true)
+class Database
 {
-    $count = 0;
-    $offset = strpos($haystack, $needle);
+    public $db,$stmt;
     
-    if (!$replace_first)
+    function __construct($dsn, $username, $password, $driver_options)
     {
-        $offset += strlen($needle);
-        $offset = strpos($haystack, $needle, $offset);
-    }
-    
-    while($offset !== false)
-    {
-        $haystack = substr_replace($haystack, $replace, $offset, strlen($needle));
-        $count++;
-        $offset += strlen($replace);
-        $offset = strpos($haystack, $needle, $offset);
-        
-        if($offset !== false)
+        try
         {
-            $offset += strlen($needle);
-            $offset = strpos($haystack, $needle, $offset);
+            $this->db = new PDO($dsn, $username, $password, $driver_options);
+        }
+        catch( PDOException $error )
+        {
+            die('Connection failed: '.$error->getMessage());
         }
     }
     
-    return $haystack;
-}
-
-function bindParams( $input, $data )
-{
-    $output = $input;
-    
-    if(!empty($data))
+    function query($query, $data='')
     {
-        if(is_array($data))
+        try
         {
-            foreach($data as $key => $value)
+            $this->stmt = $this->db->prepare($query);
+            
+            if(!empty($data))
             {
-                $value = (!empty($value)) ? $value : 0;
-                
-                if(is_numeric($key))
+                if( is_array($data) )
                 {
-                    $key = ':'.($key+1);
-                    $output = str_replace_every_other('?', "'".mysql_real_escape_string($value)."'", $output);
+                    $this->stmt->execute( $data );
                 }
                 else
                 {
-                    $key = ':'.$key;
-                    $output = str_replace($key, "'".mysql_real_escape_string($value)."'", $output);
+                    $this->stmt->execute( array($data) );
                 }
             }
+            else
+            {
+                $this->stmt->execute();
+            }
         }
-        else
+        catch( PDOException $error )
         {
-            $output = str_replace('?', "'".mysql_real_escape_string($data)."'", $output);
+            die('Connection failed: '.$error->getMessage());
         }
     }
-    
-    return $output;
 }
 
 function redirect($url,$time=0)

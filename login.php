@@ -7,32 +7,26 @@ if($browserid->verify_assertion())
 {
     $email = $browserid->get_email();
     
-    $query = bindParams("SELECT * FROM persona_users WHERE email = ?", $email);
-    $query = mysql_query($query)or die($statement.' | '.mysql_error());
-    
-    # If user doesn't have account yet, make one for identifiaction.
-    if( mysql_num_rows($query) == 0 )
+    $pdo->query("SELECT * FROM persona_users WHERE email = ?", $email);
+
+    if( count( $pdo->stmt->fetchAll() ) == 0 )
     {
         # Email Does not Exist, Create User.
-        $query = bindParams("INSERT INTO persona_users (email) VALUES (?)", $email);
-        $query = mysql_query($query)or die($statement.' | '.mysql_error());
-        
-        $id = mysql_insert_id();
+        $pdo->query("INSERT INTO persona_users (email) VALUES (?)", $email);
+        $id = PDO::lastInsertId();
     }
     else
     {
-        $fetch = mysql_fetch_object($query);
+        $fetch = $pdo->stmt->fetch(PDO::FETCH_OBJ);
         $id = $fetch->id;
     }
     
     # Make Session
     $session = $id.uniqid();
-    
     setcookie('session',$session, time()+(60*60*24*31*12));
     
     # Update Session
-    $query = bindParams("UPDATE persona_users SET session = ? WHERE email = ?", array($session,$email));
-    mysql_query($query)or die($statement.' | '.mysql_error());
+    $pdo->query("UPDATE persona_users SET session = ? WHERE email = ?", array($session,$email));
     
     echo 'Welcome '.$browserid->get_email().'<br />';
     redirect('index.php',2);
