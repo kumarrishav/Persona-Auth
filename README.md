@@ -2,7 +2,7 @@
 
 Persona Auth is a Simple Implementation in PHP for keeping track who is logged in using [Mozilla Persona](http://www.mozilla.org/en-US/persona/).
 
-Persona Only handles the Login Portion, Thus I was tasked with Creating a Session Type handling system in PHP, to keeping my users logged in. Challenge Accepted!
+Persona Only handles the Login Portion, Thus I was tasked with Creating a Persistent Login handler in PHP, to keeping my users logged in. Challenge Accepted!
 
 ## Usage
 
