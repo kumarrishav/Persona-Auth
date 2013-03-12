@@ -4,6 +4,10 @@ Persona Auth is a Simple Implementation in PHP for keeping track who is logged i
 
 Persona Only handles the Login Portion, Thus I was tasked with Creating a Persistent Login handler in PHP, to keeping my users logged in. Challenge Accepted!
 
+## Demo
+
+We created a [Live Demo Page](http://demo.modularr.com/persona/) to show you what it looks like.
+
 ## Usage
 
 This is more of a Implementation rather then a Library.
