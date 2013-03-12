@@ -1,51 +1,36 @@
 <?php
-class Database
+/**
+ * Query Function, makes it easier to do PDO Queries.
+ */
+function query($query, $data='')
 {
-    public $db,$stmt;
+    global $pdo;
     
-    function __construct($dsn, $username, $password, $driver_options)
+    try
     {
-        try
+        $query = $pdo->prepare($query);
+        
+        if(!empty($data))
         {
-            $this->db = new PDO($dsn, $username, $password, $driver_options);
-        }
-        catch( PDOException $error )
-        {
-            die('Connection failed: '.$error->getMessage());
-        }
-    }
-    
-    function query($query, $data='')
-    {
-        try
-        {
-            $this->stmt = $this->db->prepare($query);
-            
-            if(!empty($data))
+            if( is_array($data) )
             {
-                if( is_array($data) )
-                {
-                    $this->stmt->execute( $data );
-                }
-                else
-                {
-                    $this->stmt->execute( array($data) );
-                }
+                $query->execute( $data );
             }
             else
             {
-                $this->stmt->execute();
+                $query->execute( array($data) );
             }
         }
-        catch( PDOException $error )
+        else
         {
-            die('Connection failed: '.$error->getMessage());
+            $query->execute();
         }
+        
+        return $query;
     }
-    
-    function insert_id()
+    catch( PDOException $error )
     {
-        return $this->db->lastInsertId();
+        die('Connection failed: '.$error->getMessage());
     }
 }
 

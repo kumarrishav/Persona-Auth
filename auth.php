@@ -1,11 +1,16 @@
 <?php
-$session = (!empty($_COOKIE['session'])) ? $_COOKIE['session'] : md5(0);
+# Make Session Variable, Cannot be Empty, an Empty Binding will result in a Failed Query.
+$session = (!empty($_COOKIE['session'])) ? $_COOKIE['session'] : 2;
 
-$pdo->query("SELECT id FROM persona_users WHERE session = ?", $session);
+# Check is Session Exists.
+$query = Query("SELECT id FROM persona_users WHERE session = ?", $session);
 
-if( count( $pdo->stmt->fetchAll() ) == 1 )
+# Check if a User is Authenticated with this session.
+if( count( $query->fetchAll() ) == 1 )
 {
-    $user = $pdo->stmt->fetch(PDO::FETCH_OBJ);
+    # Fetch Uer Information
+    $user = $query->fetch(PDO::FETCH_OBJ);
     $id = $user->id;
-    $login = true;
+    
+    $login = true; # Set Login to True
 }

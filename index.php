@@ -31,8 +31,9 @@ function browserID()
 <?php
 if($login)
 {
-    $pdo->query("SELECT id,email,username FROM persona_users WHERE session = ?", $session);
-    $my = $pdo->stmt->fetch(PDO::FETCH_OBJ);
+    # Select User info, or at least whatever we have from them.
+    $query = query("SELECT id,email,username FROM persona_users WHERE session = ?", $session);
+    $my = $query->fetch(PDO::FETCH_OBJ);
     
     /**
      * You can totally get rid of this junk here, it's for example purposes!

@@ -2,34 +2,42 @@
 include 'config.php';
 include 'lib/persona.class.php';
 
+# Call Browserid Code for this Domain
 $browserid = new Persona($_SERVER['HTTP_HOST'], $_POST['assertion']);
+
+# Verify Assertion
 if($browserid->verify_assertion())
 {
+    # Get Email Adress
     $email = $browserid->get_email();
     
-    $pdo->query("SELECT * FROM persona_users WHERE email = ?", $email);
-
-    if( count( $pdo->stmt->fetchAll() ) == 0 )
+    # Check to see if there is a user with this Email
+    $query = query("SELECT * FROM persona_users WHERE email = ?", $email);
+    
+    # Insert or Fetch Data, depending if they already exist or not.
+    if( count( $query->fetchAll() ) == 0 )
     {
-        # Email Does not Exist, Create User.
-        $pdo->query("INSERT INTO persona_users (email) VALUES (?)", $email);
-        $id = $pdo->insert_id();
+        # Email Does not Exist, Create User, Set newly Created ID.
+        query("INSERT INTO persona_users (email) VALUES (?)", $email);
+        $id = $pdo->lastInsertId();
     }
     else
     {
-        $fetch = $pdo->stmt->fetch(PDO::FETCH_OBJ);
+        # Fetch User Id.
+        $fetch = $query->fetch(PDO::FETCH_OBJ);
         $id = $fetch->id;
     }
     
     # Make Session
-    $session = $id.uniqid();
+    $session = $id.uniqid(); # This will always be unique...
     setcookie('session',$session, time()+(60*60*24*31*12));
     
     # Update Session
-    $pdo->query("UPDATE persona_users SET session = ? WHERE email = ?", array($session,$email));
+    query("UPDATE persona_users SET session = ? WHERE email = ?", array($session,$email));
     
+    # Do Some Welcoming.
     echo 'Welcome '.$browserid->get_email().'<br />';
-    redirect('index.php',2);
+    redirect('index.php',2); # Redirect to homepage.
 }
 else
 {
