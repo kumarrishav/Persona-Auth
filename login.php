@@ -13,7 +13,7 @@ if($browserid->verify_assertion())
     {
         # Email Does not Exist, Create User.
         $pdo->query("INSERT INTO persona_users (email) VALUES (?)", $email);
-        $id = PDO::lastInsertId();
+        $id = $pdo->insert_id();
     }
     else
     {

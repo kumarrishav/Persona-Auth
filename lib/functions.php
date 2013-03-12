@@ -42,6 +42,11 @@ class Database
             die('Connection failed: '.$error->getMessage());
         }
     }
+    
+    function insert_id()
+    {
+        return $this->db->lastInsertId();
+    }
 }
 
 function redirect($url,$time=0)
