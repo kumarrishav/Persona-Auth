@@ -9,6 +9,7 @@ $query = Query("SELECT id FROM persona_users WHERE session = ?", $session);
 if( count( $query->fetchAll() ) == 1 )
 {
     # Fetch Uer Information
+    $query = Query("SELECT id FROM persona_users WHERE session = ?", $session);
     $user = $query->fetch(PDO::FETCH_OBJ);
     $id = $user->id;
     
