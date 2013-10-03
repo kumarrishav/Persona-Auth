@@ -6,11 +6,11 @@ Persona Only handles the Login Portion, Thus I was tasked with Creating a Persis
 
 ## Demo
 
-We created a [Live Demo Page](http://demo.modularr.com/persona/) to show you what it looks like.
+I created a [Live Demo Page](http://demo.modularr.com/persona/) to show you what it looks like.
 
 ## Usage
 
-This is more of a Implementation rather then a Library.
+This is an Implementation rather than a Library.
 
 1. Rename `settings.sample.php` to `settings.php`
 2. Change database Details
